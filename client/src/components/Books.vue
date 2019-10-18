@@ -4,7 +4,8 @@
       <div class="col-sm-10">
         <h1>Books</h1>
         <hr><br><br>
-        <button type="button" class="btn btn-success btn-sm">Add Book</button>
+        <button type="button" class="btn btn-success btn-sm"
+        v-b-modal.book-modal>Add Book</button>
         <br><br>
         <table class="table table-hover">
           <thead>
@@ -64,20 +65,27 @@
             <b-form-checkbox value="true">Read?</b-form-checkbox>
           </b-form-checkbox-group>
         </b-form-group>
+        <b-button-group>
            <b-button type="submit" variant="primary">Submit</b-button>
            <b-button type="reset" variant="danger">Reset</b-button>
+        </b-button-group>
       </b-form>
-  </b-modal>
+    </b-modal>
   </div>
 </template>
 
-<script charset="utf-8">
+<script>
 import axios from 'axios';
 
 export default {
   data() {
     return {
       books: [],
+      addBookForm: {
+        title: '',
+        author: '',
+        read: [],
+      },
     };
   },
   methods: {
@@ -90,7 +98,43 @@ export default {
         .catch((error) => {
           // eslint-disable-next-line
           console.error(error);
+          this.getBooks();
         });
+    },
+    addBook(payload) {
+      const path = 'http://localhost:5000/books';
+      axios.post(path, payload)
+        .then(() => {
+          this.getBooks();
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.log(error);
+          this.getBooks();
+        });
+    },
+    initForm() {
+      this.addBookForm.title = '';
+      this.addBookForm.author = '';
+      this.addBookForm.read = [];
+    },
+    onSubmit(evt) {
+      evt.preventDefault();
+      this.$refs.addBookModal.hide();
+      let read = false;
+      if (this.addBookForm.read[0]) read = true;
+      const payload = {
+        title: this.addBookForm.title,
+        author: this.addBookForm.author,
+        read, // property shorthand
+      };
+      this.addBook(payload);
+      this.initForm();
+    },
+    onReset(evt) {
+      evt.preventDefault();
+      this.$refs.addBookModal.hide();
+      this.initForm();
     },
   },
   created() {
