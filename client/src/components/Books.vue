@@ -4,7 +4,7 @@
       <div class="col-sm-10">
         <h1>Books</h1>
         <hr><br><br>
-        <alert message="Hello World!!"></alert>
+        <alert :message="message"></alert>
         <button type="button" class="btn btn-success btn-sm"
         v-b-modal.book-modal>Add Book</button>
         <br><br>
@@ -88,6 +88,7 @@ export default {
         author: '',
         read: [],
       },
+      message: '',
     };
   },
   components: {
@@ -111,6 +112,7 @@ export default {
       axios.post(path, payload)
         .then(() => {
           this.getBooks();
+          this.message = 'Book added!';
         })
         .catch((error) => {
           // eslint-disable-next-line
