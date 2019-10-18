@@ -76,6 +76,7 @@
 
 <script>
 import axios from 'axios';
+import Alert from './Alert.vue';
 
 export default {
   data() {
@@ -87,6 +88,9 @@ export default {
         read: [],
       },
     };
+  },
+  components: {
+    alert: Alert,
   },
   methods: {
     getBooks() {
