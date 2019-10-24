@@ -208,6 +208,18 @@ export default {
       };
       this.updateBook(payload, this.editForm.id);
     },
+    updateBook(payload, bookID) {
+      const path = `http://localhost:5000/books/${bookID}`;
+      axios.put(path, payload)
+        .then(() => {
+          this.getBooks();
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.error(error);
+          this.getBooks();
+        });
+    },
   },
   created() {
     this.getBooks();
