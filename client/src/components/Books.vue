@@ -27,7 +27,13 @@
               </td>
               <td>
                 <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-warning btn-sm">Update</button>
+                  <button
+                          type="button"
+                          class="btn btn-warning btn-sm"
+                          v-b-modal.book-update-model
+                          @click="editBook(book)">
+                      Update
+                  </button>
                   <button type="button" class="btn btn-danger btn-sm">Delete</button>
                 </div>
               </td>
@@ -186,6 +192,21 @@ export default {
       evt.preventDefault();
       this.$refs.addBookModal.hide();
       this.initForm();
+    },
+    editBook(book) {
+      this.editForm = book;
+    },
+    onSubmitUpdate(evt) {
+      evt.preventDefault();
+      this.$refs.editBookModal.hide();
+      let read = false;
+      if (this.editForm.read[0]) read = true;
+      const payload = {
+        title: this.editForm.title,
+        author: this.editForm.author,
+        read,
+      };
+      this.updateBook(payload, this.editForm.id);
     },
   },
   created() {
