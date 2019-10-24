@@ -38,7 +38,7 @@ def remove_book(book_id):
         if book['id'] == book_id:
             BOOKS.remove(book)
             return True
-        return False
+    return False
 
 
 # sanity check route
