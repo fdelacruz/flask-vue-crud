@@ -30,7 +30,7 @@
                   <button
                           type="button"
                           class="btn btn-warning btn-sm"
-                          v-b-modal.book-update-model
+                          v-b-modal.book-update-modal
                           @click="editBook(book)">
                       Update
                   </button>
