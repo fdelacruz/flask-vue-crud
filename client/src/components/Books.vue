@@ -174,6 +174,9 @@ export default {
       this.addBookForm.title = '';
       this.addBookForm.author = '';
       this.addBookForm.read = [];
+      this.editForm.id = '';
+      this.editForm.title = '';
+      this.editForm.read = [];
     },
     onSubmit(evt) {
       evt.preventDefault();
@@ -221,6 +224,12 @@ export default {
           console.error(error);
           this.getBooks();
         });
+    },
+    onResetUpdate(evt) {
+      evt.preventDefault();
+      this.$refs.editBookModal.hide();
+      this.initForm();
+      this.getBooks(); // why?
     },
   },
   created() {
